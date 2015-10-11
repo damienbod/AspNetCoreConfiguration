@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using AspNet5Configuration.Configurations;
+using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
@@ -11,36 +12,32 @@ namespace AspNet5Configuration
     {
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
-            // Setup configuration sources.
+            var globalbuilder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+                .AddJsonFile("globalconfig.json");
+            var globalConfiguration = globalbuilder.Build();
+
+            string stagingEnviroment = globalConfiguration["StagingEnviroment"];
+
             var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
-                .AddEnvironmentVariables();
+                .AddJsonFile($"config.{stagingEnviroment}.json", optional: true);
             Configuration = builder.Build();
         }
 
         public IConfigurationRoot Configuration { get; set; }
 
-        // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add MVC services to the services container.
+            services.Configure<ApplicationConfiguration>(Configuration.GetSection("ApplicationConfiguration"));
             services.AddMvc();
-
-            // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
-            // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
-            // services.AddWebApiConventions();
         }
 
-        // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
 
-            // Configure the HTTP request pipeline.
-
-            // Add the following to the request pipeline only in development environment.
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -48,23 +45,16 @@ namespace AspNet5Configuration
             }
             else
             {
-                // Add Error handling middleware which catches all application specific errors and
-                // send the request to the following path or controller action.
                 app.UseErrorHandler("/Home/Error");
             }
 
-            // Add static files to the request pipeline.
             app.UseStaticFiles();
 
-            // Add MVC to the request pipeline.
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
-                // Uncomment the following line to add a route for porting Web API 2 controllers.
-                // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
             });
         }
     }

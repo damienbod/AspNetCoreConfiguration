@@ -1,0 +1,6 @@
+{
+    "ApplicationConfiguration": {
+        "MinimumLevel": 4,
+        "AboutMessage": "This is the production configuration"
+    }
+}

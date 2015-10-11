@@ -1,0 +1,6 @@
+{
+    "ApplicationConfiguration": {
+        "MinimumLevel": 3,
+        "AboutMessage": "This is the test configuration"
+    }
+}
