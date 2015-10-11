@@ -19,8 +19,5 @@ namespace AspNet5Configuration.Controllers
         {
             return new string[] { _optionsApplicationConfiguration.Options.AboutMessage };
         }
-
-
-
     }
 }

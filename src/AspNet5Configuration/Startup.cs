@@ -16,11 +16,11 @@ namespace AspNet5Configuration
                 .AddJsonFile("globalconfig.json");
             var globalConfiguration = globalbuilder.Build();
 
-            string stagingEnviroment = globalConfiguration["StagingEnviroment"];
+            string stagingEnvironment = globalConfiguration["StagingEnvironment"];
 
             var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
-                .AddJsonFile($"config.{stagingEnviroment}.json", optional: true);
+                .AddJsonFile($"config.{stagingEnvironment}.json", optional: true);
             Configuration = builder.Build();
         }
 
