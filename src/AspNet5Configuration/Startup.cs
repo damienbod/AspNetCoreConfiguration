@@ -40,16 +40,6 @@ namespace AspNet5Configuration
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
-            {
-                app.UseBrowserLink();
-                app.UseErrorPage();
-            }
-            else
-            {
-                app.UseErrorHandler("/Home/Error");
-            }
-
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
