@@ -34,6 +34,8 @@ namespace AspNet5Configuration
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+           // int level = int.Parse(Configuration["ApplicationConfiguration:MinimumLevel"]);
+
             loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
