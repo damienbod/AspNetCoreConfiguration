@@ -17,7 +17,7 @@ namespace AspNet5Configuration.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { _optionsApplicationConfiguration.Options.AboutMessage };
+            return new string[] { _optionsApplicationConfiguration.Value.AboutMessage };
         }
     }
 }

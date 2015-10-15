@@ -12,13 +12,15 @@ namespace AspNet5Configuration
     {
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
-            var globalbuilder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+            var globalbuilder = new ConfigurationBuilder()
+                .SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("globalconfig.json");
             var globalConfiguration = globalbuilder.Build();
 
             string stagingEnvironment = globalConfiguration["StagingEnvironment"];
 
-            var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
                 .AddJsonFile($"config.{stagingEnvironment}.json", optional: true);
             Configuration = builder.Build();
