@@ -36,20 +36,30 @@ namespace AspNet5Configuration
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-           // int level = int.Parse(Configuration["ApplicationConfiguration:MinimumLevel"]);
+            // int level = int.Parse(Configuration["ApplicationConfiguration:MinimumLevel"]);
 
             loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
 
+            // Add the platform handler to the request pipeline.
+            app.UseIISPlatformHandler();
+
+            // Configure the HTTP request pipeline.
             app.UseStaticFiles();
 
+            // Add MVC to the request pipeline.
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                // Uncomment the following line to add a route for porting Web API 2 controllers.
+                // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
             });
+            // Add the following route for porting Web API 2 controllers.
+            // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
         }
     }
 }
