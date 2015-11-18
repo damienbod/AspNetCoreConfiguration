@@ -1,13 +1,19 @@
-﻿using AspNet5Configuration.Configurations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.Dnx.Runtime;
-using Microsoft.Framework.Configuration;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace AspNet5Configuration
 {
+    using AspNet5Configuration.Configurations;
+
+    using Microsoft.Extensions.PlatformAbstractions;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
@@ -61,5 +67,9 @@ namespace AspNet5Configuration
             // Add the following route for porting Web API 2 controllers.
             // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
         }
+
+
+        // Entry point for the application.
+        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }
