@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using AspNet5Configuration.Configurations;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace AspNet5Configuration.Controllers
 {
-    using Microsoft.Extensions.OptionsModel;
-
     [Route("api/[controller]")]
     public class AboutController : Controller
     {
