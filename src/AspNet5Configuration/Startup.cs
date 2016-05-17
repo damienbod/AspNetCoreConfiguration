@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using AspNet5Configuration.Configurations;
 
 namespace AspNet5Configuration
 {
-    using AspNet5Configuration.Configurations;
-
-    using Microsoft.Extensions.PlatformAbstractions;
-
     public class Startup
     {
-        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
-        {
+        public Startup(IHostingEnvironment env)
+        {		
             var globalbuilder = new ConfigurationBuilder()
-                .SetBasePath(appEnv.ApplicationBasePath)
+                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("globalconfig.json");
             var globalConfiguration = globalbuilder.Build();
 
             string stagingEnvironment = globalConfiguration["StagingEnvironment"];
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(appEnv.ApplicationBasePath)
+                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("config.json")
                 .AddJsonFile($"config.{stagingEnvironment}.json", optional: true);
             Configuration = builder.Build();
@@ -44,32 +38,29 @@ namespace AspNet5Configuration
         {
             // int level = int.Parse(Configuration["ApplicationConfiguration:MinimumLevel"]);
 
-            loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
 
-            // Add the platform handler to the request pipeline.
-            app.UseIISPlatformHandler();
-
-            // Configure the HTTP request pipeline.
             app.UseStaticFiles();
 
-            // Add MVC to the request pipeline.
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
-                // Uncomment the following line to add a route for porting Web API 2 controllers.
-                // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
             });
-            // Add the following route for porting Web API 2 controllers.
-            // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
         }
 
+        public static void Main(string[] args)
+        {
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .Build();
 
-        // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+            host.Run();
+        }
     }
 }
