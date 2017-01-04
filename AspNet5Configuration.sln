@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2CA3CBC2-47AC-48CF-BB36-5742A5B4D3D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{62D1A898-3432-40EF-B1B9-66F881A0CD49}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNet5Configuration", "src\AspNet5Configuration\AspNet5Configuration.csproj", "{092DBD39-B72C-4C2A-B4F9-0147C32EBC23}"
 EndProject
