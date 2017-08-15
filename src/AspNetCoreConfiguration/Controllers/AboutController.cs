@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using AspNet5Configuration.Configurations;
+using AspNetCoreConfiguration.Configurations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace AspNet5Configuration.Controllers
+namespace AspNetCoreConfiguration.Controllers
 {
     [Route("api/[controller]")]
     public class AboutController : Controller
