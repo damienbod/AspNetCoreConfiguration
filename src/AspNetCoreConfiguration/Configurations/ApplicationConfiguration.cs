@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AspNet5Configuration.Configurations
+﻿
+namespace AspNetCoreConfiguration.Configurations
 {
     public class ApplicationConfiguration
     {
