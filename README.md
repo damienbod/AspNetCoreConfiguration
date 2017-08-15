@@ -1,5 +1,7 @@
 # ASP.NET Core Configuration
 
+2017.08.15: Updated to ASP.NET Core 2.0
+
 2017.01.04: Updated to ASP.NET Core 1.1 and VS2017
 
 
