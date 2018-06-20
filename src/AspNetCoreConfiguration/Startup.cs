@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AspNetCoreConfiguration.Configurations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreConfiguration
 {
@@ -30,7 +31,7 @@ namespace AspNetCoreConfiguration
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ApplicationConfiguration>(Configuration.GetSection("ApplicationConfiguration"));
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
